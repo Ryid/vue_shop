@@ -19,6 +19,16 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/dashboard',
+    children:[
+      {
+        path: 'products',
+        component: ()=> import('../views/Products')
+      }
+    ],
+    component: () => import('../views/Dashboard')
   }
 ]
 

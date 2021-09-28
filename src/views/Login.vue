@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <form class="row justify-content-center">
+    <form class="row justify-content-center" @submit.prevent="signIn">
       <div class="col-md-6">
         <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
         <div class="mb-2">
@@ -45,6 +45,19 @@ export default {
         username: '',
         password: ''
       }
+    }
+  },
+  methods: {
+    signIn(){
+      const api = `${process.env.VUE_APP_API}admin/signin`;
+      this.$http.post(api,this.user)
+        .then((res)=>{
+          if(res.data.success){
+            const {token, expired} = res.data
+            document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
+            this.$router.push('/dashboard/products')
+          }
+        })
     }
   }
 }
